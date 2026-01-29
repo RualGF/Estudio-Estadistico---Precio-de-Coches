@@ -11,6 +11,14 @@ Este proyecto realiza un estudio estadístico para analizar la relación entre l
 *   **Transformación Logarítmica**: Aplica una transformación logarítmica a la variable de precio para analizar la relación en una escala diferente.
 *   **Eficiencia**: Carga los datos en memoria una sola vez al iniciar la aplicación para un rendimiento óptimo.
 
+## 🧩 Retos técnicos y decisiones de diseño
+
+1. **Tratamiento de Datos Asimétricos (Skewness):** Los precios de los coches suelen presentar una distribución con sesgo positivo. Implementé una transformación logarítmica para normalizar la escala, permitiendo que la Correlación de Pearson capturara mejor la relación lineal subyacente que no era evidente en la escala original.
+
+2. **Detección Dinámica de Outliers:** Utilicé la metodología de Z-Score parametrizada. A diferencia de un filtro estático, el endpoint permite al usuario ajustar el umbral de sensibilidad (z), permitiendo un análisis exploratorio más flexible según la calidad del dataset.
+
+3. **Optimización de Carga (Startup Logic):** Para garantizar respuestas de baja latencia en la API, implementé la carga del archivo .pkl en el evento de inicio del servidor. Esto evita lecturas de disco redundantes en cada petición, optimizando el uso de memoria y CPU.
+
 ## 📋 Requisitos
 
 *   Python 3.8+
@@ -27,12 +35,12 @@ Este proyecto realiza un estudio estadístico para analizar la relación entre l
 2.  **Crear y activar un entorno virtual** (altamente recomendado):
     ```bash
     # Para Windows
-    python -m venv venv
-    .\venv\Scripts\activate
+    python -m venv .venv
+    ".\.venv\Scripts\activate" o ".venv/Scripts/activate"
 
     # Para macOS/Linux
-    python3 -m venv venv
-    source venv/bin/activate
+    python3 -m venv .venv
+    source .venv/bin/activate
     ```
 
 3.  **Instalar las dependencias**:
@@ -89,4 +97,5 @@ http://127.0.0.1:8000/analisis?z=2
 
 FastAPI genera automáticamente una documentación interactiva (Swagger UI) donde puedes probar los endpoints directamente desde el navegador.
 
+![Documentación Interactiva Swagger](img/swagger_ui.png)
 *   **URL**: `http://127.0.0.1:8000/docs`

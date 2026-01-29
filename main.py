@@ -75,6 +75,20 @@ app = FastAPI(
     version="1.0.0"
 )
 
+@app.get("/")
+def root():
+    """Ruta raíz de bienvenida a la API."""
+    return {
+        "mensaje": "Bienvenido a la API de Análisis Estadístico de Precios de Coches",
+        "version": "1.0.0",
+        "rutas_disponibles": {
+            "/": "Esta ruta (información de bienvenida)",
+            "/analisis": "Realiza el análisis estadístico completo",
+            "/docs": "Documentación interactiva (Swagger UI)",
+            "/redoc": "Documentación alternativa (ReDoc)"
+        }
+    }
+
 @app.get("/analisis")
 def analizar_datos(z: int = 3):
     """
